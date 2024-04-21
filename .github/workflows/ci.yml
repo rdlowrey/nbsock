@@ -22,6 +22,12 @@ jobs:
           - operating-system: 'ubuntu-latest'
             php-version: '8.3'
 
+          - operating-system: 'ubuntu-latest'
+            php-version: '8.4'
+            static-analysis: none
+            style-fix: none
+            composer-require-checker-version: none
+
           - operating-system: 'windows-latest'
             php-version: '8.3'
             job-description: 'on Windows'
@@ -94,6 +100,7 @@ jobs:
 
       - name: Run static analysis
         run: vendor/bin/psalm.phar
+        if: matrix.static-analysis != 'none'
 
       - name: Run style fixer
         env:
