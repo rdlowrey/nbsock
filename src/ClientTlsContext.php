@@ -173,7 +173,7 @@ final class ClientTlsContext
      *
      * @return self Cloned, modified instance.
      */
-    public function withCiphers(string $ciphers = null): self
+    public function withCiphers(?string $ciphers = null): self
     {
         $clone = clone $this;
         $clone->ciphers = $ciphers;
@@ -196,7 +196,7 @@ final class ClientTlsContext
      *
      * @return self Cloned, modified instance.
      */
-    public function withCaFile(string $cafile = null): self
+    public function withCaFile(?string $cafile = null): self
     {
         $clone = clone $this;
         $clone->caFile = $cafile;
@@ -219,7 +219,7 @@ final class ClientTlsContext
      *
      * @return self Cloned, modified instance.
      */
-    public function withCaPath(string $capath = null): self
+    public function withCaPath(?string $capath = null): self
     {
         $clone = clone $this;
         $clone->caPath = $capath;
@@ -355,7 +355,7 @@ final class ClientTlsContext
      *
      * @return self Cloned, modified instance.
      */
-    public function withCertificate(Certificate $certificate = null): self
+    public function withCertificate(?Certificate $certificate = null): self
     {
         $clone = clone $this;
         $clone->certificate = $certificate;

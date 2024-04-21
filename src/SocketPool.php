@@ -32,8 +32,8 @@ interface SocketPool
      */
     public function checkout(
         string $uri,
-        ConnectContext $context = null,
-        Cancellation $cancellation = null
+        ?ConnectContext $context = null,
+        ?Cancellation $cancellation = null
     ): Socket;
 
     /**

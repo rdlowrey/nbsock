@@ -10,7 +10,7 @@ final class PendingAcceptError extends \Error
     public function __construct(
         string $message = 'The previous accept operation must complete before accept can be called again',
         int $code = 0,
-        \Throwable $previous = null
+        ?\Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
     }

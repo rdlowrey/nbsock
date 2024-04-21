@@ -195,7 +195,7 @@ function shutdownTls($socket): void
  *
  * @internal
  */
-function normalizeBindToOption(string $bindTo = null): ?string
+function normalizeBindToOption(?string $bindTo = null): ?string
 {
     if ($bindTo === null) {
         return null;

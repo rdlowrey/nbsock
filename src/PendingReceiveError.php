@@ -10,7 +10,7 @@ final class PendingReceiveError extends \Error
     public function __construct(
         string $message = 'The previous receive operation must complete before receive can be called again',
         int $code = 0,
-        \Throwable $previous = null
+        ?\Throwable $previous = null
     ) {
         parent::__construct($message, $code, $previous);
     }

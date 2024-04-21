@@ -45,8 +45,8 @@ final class UnlimitedSocketPool implements SocketPool
 
     public function checkout(
         string $uri,
-        ConnectContext $context = null,
-        Cancellation $cancellation = null,
+        ?ConnectContext $context = null,
+        ?Cancellation $cancellation = null,
     ): Socket {
         // A request might already be cancelled before we reach the checkout, so do not even attempt to checkout in that
         // case. The weird logic is required to throw the token's exception instead of creating a new one.
@@ -193,8 +193,8 @@ final class UnlimitedSocketPool implements SocketPool
     private function checkoutNewSocket(
         string $uri,
         string $cacheKey,
-        ConnectContext $connectContext = null,
-        Cancellation $cancellation = null,
+        ?ConnectContext $connectContext = null,
+        ?Cancellation $cancellation = null,
     ): Socket {
         $this->pendingCount[$uri] = ($this->pendingCount[$uri] ?? 0) + 1;
 
