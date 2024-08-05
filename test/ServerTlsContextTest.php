@@ -85,6 +85,31 @@ class ServerTlsContextTest extends TestCase
         self::assertFalse($clonedContext->hasPeerVerification());
     }
 
+    public function testDefaultPeerNameVerification(): void
+    {
+        $context = new ServerTlsContext;
+        self::assertFalse($context->hasPeerNameVerification());
+    }
+
+    public function testWithoutPeerNameVerification(): void
+    {
+        $context = new ServerTlsContext;
+        $clonedContext = $context->withPeerVerification()->withoutPeerNameVerification();
+
+        self::assertTrue($clonedContext->hasPeerVerification());
+        self::assertFalse($clonedContext->hasPeerNameVerification());
+    }
+
+    public function testContextOptionsWithoutPeerNameVerification(): void
+    {
+        $context = new ServerTlsContext;
+        $clonedContext = $context->withPeerVerification()->withoutPeerNameVerification();
+        $options = $clonedContext->toStreamContextArray()['ssl'];
+
+        self::assertTrue($options['verify_peer']);
+        self::assertFalse($options['verify_peer_name']);
+    }
+
     public function verifyDepthDataProvider(): array
     {
         return [
