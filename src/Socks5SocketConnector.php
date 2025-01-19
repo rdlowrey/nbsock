@@ -77,8 +77,7 @@ final class Socks5SocketConnector implements SocketConnector
             throw new \Error("Both or neither username and password must be provided!");
         }
 
-        /** @psalm-suppress DeprecatedMethod */
-        $uri = Uri::createFromString($target);
+        $uri = Uri::new($target);
 
         $read = function (int $length) use ($socket, $cancellation): string {
             \assert($length > 0);
