@@ -58,6 +58,8 @@ final class ServerTlsContext
 
     private bool $verifyPeer = false;
 
+    private bool $verifyPeerName = true;
+
     private int $verifyDepth = 10;
 
     private ?string $ciphers = null;
@@ -164,6 +166,40 @@ final class ServerTlsContext
     public function hasPeerVerification(): bool
     {
         return $this->verifyPeer;
+    }
+
+    /**
+     * Enable peer name verification, this is the default with verifyPeer enabled.
+     *
+     * @return self Cloned, modified instance.
+     */
+    public function withPeerNameVerification(): self
+    {
+        $clone = clone $this;
+        $clone->verifyPeerName = true;
+
+        return $clone;
+    }
+
+    /**
+     * Disable peer name verification.
+     *
+     * @return self Cloned, modified instance.
+     */
+    public function withoutPeerNameVerification(): self
+    {
+        $clone = clone $this;
+        $clone->verifyPeerName = false;
+
+        return $clone;
+    }
+
+    /**
+     * @return bool Whether peer verification is enabled.
+     */
+    public function hasPeerNameVerification(): bool
+    {
+        return $this->verifyPeer && $this->verifyPeerName;
     }
 
     /**
@@ -437,7 +473,7 @@ final class ServerTlsContext
             'crypto_method' => $this->toStreamCryptoMethod(),
             'peer_name' => $this->peerName,
             'verify_peer' => $this->verifyPeer,
-            'verify_peer_name' => $this->verifyPeer,
+            'verify_peer_name' => $this->verifyPeer && $this->verifyPeerName,
             'verify_depth' => $this->verifyDepth,
             'ciphers' => $this->ciphers ?? \OPENSSL_DEFAULT_STREAM_CIPHERS,
             'honor_cipher_order' => true,

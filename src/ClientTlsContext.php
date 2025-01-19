@@ -22,6 +22,8 @@ final class ClientTlsContext
 
     private bool $verifyPeer = true;
 
+    private bool $verifyPeerName = true;
+
     private int $verifyDepth = 10;
 
     private ?array $peerFingerprint = null;
@@ -127,6 +129,8 @@ final class ClientTlsContext
     {
         $clone = clone $this;
         $clone->verifyPeer = false;
+        // This is for compatibility with the former behaviour:
+        $clone->verifyPeerName = false;
 
         return $clone;
     }
@@ -137,6 +141,40 @@ final class ClientTlsContext
     public function hasPeerVerification(): bool
     {
         return $this->verifyPeer;
+    }
+
+    /**
+     * Enable peer name verification, this is the default with verifyPeer enabled.
+     *
+     * @return self Cloned, modified instance.
+     */
+    public function withPeerNameVerification(): self
+    {
+        $clone = clone $this;
+        $clone->verifyPeerName = true;
+
+        return $clone;
+    }
+
+    /**
+     * Disable peer name verification.
+     *
+     * @return self Cloned, modified instance.
+     */
+    public function withoutPeerNameVerification(): self
+    {
+        $clone = clone $this;
+        $clone->verifyPeerName = false;
+
+        return $clone;
+    }
+
+    /**
+     * @return bool Whether peer verification is enabled.
+     */
+    public function hasPeerNameVerification(): bool
+    {
+        return $this->verifyPeerName;
     }
 
     /**
@@ -452,7 +490,7 @@ final class ClientTlsContext
             'crypto_method' => $this->toStreamCryptoMethod(),
             'peer_name' => $this->peerName,
             'verify_peer' => $this->verifyPeer,
-            'verify_peer_name' => $this->verifyPeer,
+            'verify_peer_name' => $this->verifyPeerName,
             'verify_depth' => $this->verifyDepth,
             'ciphers' => $this->ciphers ?? \OPENSSL_DEFAULT_STREAM_CIPHERS,
             'capture_peer_cert' => $this->capturePeer,
